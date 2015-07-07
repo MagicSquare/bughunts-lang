@@ -1,0 +1,6 @@
+*.ipr
+*.iml
+*.iws
+.idea/
+*.swp
+node_modules/
