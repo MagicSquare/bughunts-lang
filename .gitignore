@@ -4,3 +4,4 @@
 .idea/
 *.swp
 node_modules/
+antlr4/generated/
