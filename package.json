@@ -10,6 +10,7 @@
     "mocha": "^2.2.5",
     "should": "^7.0.1"
   },
+ "main": "./lib/LadyBug.js",
   "engines": {
     "node": ">=0.10.0"
   },

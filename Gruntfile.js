@@ -17,7 +17,7 @@ module.exports = function (grunt) {
     antlr4: {
       grammar: ['<%= bughunts_lang.app %>/antlr4/BugHunts.g4'],
       jar: ['<%= bughunts_lang.app %>/antlr4/antlr-4.5-complete.jar'],
-      generated_dir: ['<%= bughunts_lang.app %>/antlr4/generated']
+      generated_dir: ['<%= bughunts_lang.app %>/lib/compiler/generated']
     },
 
     // Configure a mochaTest task
