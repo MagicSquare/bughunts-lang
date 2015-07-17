@@ -1,20 +1,29 @@
 grammar BugHunts;
-items  :
-    (ruleFO | ruleBA | ruleRI | ruleLE)*
+
+
+program
+  : statement+
+  ;
+
+statement
+  : instruction
+  | repeat
+  ;
+
+instruction
+ : action=STRING
+ ;
+
+repeat
+  : '(' statement+ ')' times=NUMBER
+  ;
+
+STRING
+    : [a-zA-Z]+
     ;
-ruleFO :
-    'FO' param=Number?
+    
+NUMBER
+    : [0-9]+
     ;
-ruleBA :
-    'BA' param=Number?
-    ;
-ruleRI :
-    'RI' param=Number?
-    ;
-ruleLE :
-    'LE' param=Number?
-    ;
-Number
-   :    ('0'..'9')+
-   ;
+
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
