@@ -26,12 +26,22 @@ describe('Parser', function () {
   });
 
   it("Should repeat the instruction 3 times", function () {
-    var expected = '';
+    var expected = [];
     var l = new LadyBug({
-      onTurnRight: function(times) { expected = 'Right ' + times; }
+      onTurnRight: function(times) { expected.push('Right'); }
     });
-    l.run('RI 3');
-    expected.should.be.equal('Right 3');
+    l.run('(RI) 3');
+    expected.join(' ').should.be.equal('Right Right Right');
+  });
+
+  it("Should repeat a set of instruction 4 times", function () {
+    var expected = [];
+    var l = new LadyBug({
+      onMoveForward: function(times) { expected.push('Forward')},
+      onTurnRight: function(times) { expected.push('Right')}
+    });
+    l.run('(FO RI) 4');
+    expected.join(' ').should.be.equal('Forward Right Forward Right Forward Right Forward Right');
   });
 
 });
