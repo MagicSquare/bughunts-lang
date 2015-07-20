@@ -5,16 +5,19 @@ var LadyBug = require('../lib/LadyBug').LadyBug;
 
 describe('Runtime', function () {
 
-  var checkLadyBugMoves = function(source, expectedMoves) {
+  var checkLadyBugMoves = function(source, expectedMoves, expectedNumberOfInstructions) {
     var movesContainer = [];
+    var nbInstructions = 0;
     var l = new LadyBug({
       onMoveForward: function(times) { movesContainer.push('Forward')},
       onMoveBackward: function(times) { movesContainer.push('Backward')},
       onTurnRight: function(times) { movesContainer.push('Right')},
-      onTurnLeft: function(times) { movesContainer.push('Left')}
+      onTurnLeft: function(times) { movesContainer.push('Left')},
+      onIncrementInstructionCounter: function(times) { var nb = times || 1; nbInstructions += nb; }
     });
     l.run(source);
     movesContainer.join(' ').should.be.equal(expectedMoves);
+    nbInstructions.should.be.equal(expectedNumberOfInstructions);
   };
 
   it('should stop everything if a compilation error is detected', function () {
@@ -51,15 +54,15 @@ describe('Runtime', function () {
   });
 
   it('should repeat the instruction 3 times', function () {
-    checkLadyBugMoves('(RI) 3', 'Right Right Right');
+    checkLadyBugMoves('(RI) 3', 'Right Right Right', 2);
   });
 
   it('should repeat a set of instruction 4 time', function () {
-    checkLadyBugMoves('(FO RI) 4', 'Forward Right Forward Right Forward Right Forward Right');
+    checkLadyBugMoves('(FO RI) 4', 'Forward Right Forward Right Forward Right Forward Right', 3);
   });
 
   it('should invoke a function', function () {
-    checkLadyBugMoves('F[FO RI](F) 4', 'Forward Right Forward Right Forward Right Forward Right');
+    checkLadyBugMoves('F[FO RI](F) 4', 'Forward Right Forward Right Forward Right Forward Right', 4);
   });
 
   it('should raise an error when a function is invoked before its declaration', function () {
@@ -72,4 +75,10 @@ describe('Runtime', function () {
     }
   });
 
+  it('should count 1 instruction when a single instruction is given', function() {
+    checkLadyBugMoves('FO', 'Forward', 1);
+    checkLadyBugMoves('BA', 'Backward', 1);
+    checkLadyBugMoves('LE', 'Left', 1);
+    checkLadyBugMoves('RI', 'Right', 1);
+  });
 });
