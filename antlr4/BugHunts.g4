@@ -7,12 +7,22 @@ program
 
 statement
   : instruction
+  | functionDeclaration
+  | functionInvocation
   | repeat
   ;
 
 instruction
  : action=STRING
  ;
+
+functionDeclaration
+  : 'F[' statement+ ']'
+  ;
+
+functionInvocation
+  : 'F'
+  ;
 
 repeat
   : '(' statement+ ')' times=NUMBER
