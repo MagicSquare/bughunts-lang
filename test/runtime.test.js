@@ -13,7 +13,7 @@ describe('Runtime', function () {
       onMoveBackward: function(times) { movesContainer.push('Backward')},
       onTurnRight: function(times) { movesContainer.push('Right')},
       onTurnLeft: function(times) { movesContainer.push('Left')},
-      onIncrementInstructionCounter: function(times) { var nb = times || 1; nbInstructions += nb; }
+      onIncrementInstructionCounter: function(times) { nbInstructions += times || 1; }
     });
     l.run(source);
     movesContainer.join(' ').should.be.equal(expectedMoves);
