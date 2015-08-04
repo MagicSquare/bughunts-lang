@@ -13,7 +13,13 @@ statement
   ;
 
 instruction
- : action=STRING
+ : action=STRING { 
+    localctx.location = { 
+      column: localctx.action.column,
+      line:   localctx.action.line,
+      index:  localctx.action.tokenIndex
+    };
+  }
  ;
 
 functionDeclaration
