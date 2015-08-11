@@ -61,7 +61,7 @@ describe('Runtime', function () {
         checkLadyBugMoves('(FO RI) 4', 'Forward Right Forward Right Forward Right Forward Right', 3);
     });
 
-    it('should invoke a function', function () {
+    it('should count the right number of instruction when invoking a function', function () {
         checkLadyBugMoves('F[FO RI](F) 4', 'Forward Right Forward Right Forward Right Forward Right', 4);
         checkLadyBugMoves('F[FO RI] F F F F', 'Forward Right Forward Right Forward Right Forward Right', 6);
     });
@@ -70,6 +70,10 @@ describe('Runtime', function () {
         checkLadyBugMoves('F[FO RI] FO RI FO RI ', 'Forward Right Forward Right', 4);
     });
 
+
+    it('should count the right number of instruction when inviking a repeat inside a function', function () {
+        checkLadyBugMoves('F[(FO) 3 RI] F F FO LE F (FO) 3 ', 'Forward Forward Forward Right Forward Forward Forward Right Forward Left Forward Forward Forward Right Forward Forward Forward', 10);
+    });
 
     it('should raise an error when a function is invoked before its declaration', function () {
         var l = new LadyBug({});
